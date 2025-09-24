@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f3f4f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-sm">
+        <h1 class="text-3xl font-bold mb-6 text-center text-gray-800">Create an Account</h1>
+        <form id="registerForm" class="space-y-6">
+            <div>
+                <label for="name" class="block text-sm font-medium text-gray-700">Name</label>
+                <input type="text" id="name" name="name" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <div>
+                <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                <input type="password" id="password" name="password" required
+                       class="mt-1 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500">
+            </div>
+            <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                Register
+            </button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const registerForm = document.getElementById('registerForm');
+            const nameInput = document.getElementById('name');
+            const passwordInput = document.getElementById('password');
+
+            // Handle the form submission for registration
+            registerForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const name = nameInput.value.trim();
+                const password = passwordInput.value.trim();
+
+                // Simple validation
+                if (!name || !password) {
+                    // Use a custom message box instead of alert()
+                    const message = 'Please enter a name and password.';
+                    console.error(message);
+                    // You would display a UI element with this message here
+                    return;
+                }
+
+                try {
+                    const response = await fetch('http://localhost:3000/api/register', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ name, password }),
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok) {
+                        // Registration successful
+                        console.log('Registration successful:', result.message);
+                        alert('Registration successful! You can now log in.');
+                        // You can redirect to the login page here
+                        // window.location.href = 'login.html';
+                    } else {
+                        // Registration failed
+                        console.error('Registration failed:', result.message);
+                        alert(`Registration failed: ${result.message}`);
+                    }
+                } catch (error) {
+                    console.error('An error occurred during registration:', error);
+                    alert('An error occurred. Please try again later.');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
