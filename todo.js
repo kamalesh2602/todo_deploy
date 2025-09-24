@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Fetch and display todos
   async function fetchTodos() {
     try {
-      const res = await fetch(`/api/todos/${username}`);
+      const res = await fetch(`https://tododeplo.netlify.app//api/todos/${username}`);
       if (!res.ok) throw new Error("Failed to fetch todos");
 
       const todos = await res.json();
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const delBtn = document.createElement('button');
           delBtn.textContent = 'Delete';
           delBtn.addEventListener('click', async () => {
-            await fetch(`/api/todos/${todo._id}`, { method: 'DELETE' });
+            await fetch(`https://tododeplo.netlify.app//api/todos/${todo._id}`, { method: 'DELETE' });
             fetchTodos();
           });
           li.appendChild(delBtn);
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
           const completeBtn = document.createElement('button');
           completeBtn.textContent = 'Complete';
           completeBtn.addEventListener('click', async () => {
-            await fetch(`/api/todos/${todo._id}`, { method: 'PATCH' });
+            await fetch(`https://tododeplo.netlify.app//api/todos/${todo._id}`, { method: 'PATCH' });
             fetchTodos();
           });
           li.appendChild(completeBtn);
@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!task) return;
 
     try {
-      await fetch('/api/todos', {
+      await fetch('https://tododeplo.netlify.app//api/todos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: username, task })
