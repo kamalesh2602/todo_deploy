@@ -22,7 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 // Login successful
                 localStorage.setItem("username",name) ;
                 alert('Login successful! Welcome.');
-                 window.location.href = 'todo.html';
+                 window.location.href = '/todo.html';
             } else {
                 // Login failed
                 const errorData = await response.json();
