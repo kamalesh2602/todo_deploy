@@ -25,23 +25,3 @@
     }
   ]
 }
-```
-
-### Key Changes and Why They Fix the 404s
-
-1.  **Direct Static File Serving (`.js`, `.css`):**
-    ```json
-    { "src": "/(.+\\.(js|css|html))$", "dest": "/$1" }
-    ```
-    This rule is the critical fix. It explicitly tells Vercel: "If the request ends with a **.js**, **.css**, or **.html** extension, serve that file directly from the root." This should resolve your `login.js` and `login.css` 404 errors.
-
-2.  **Starting Page is `index.html`:**
-    ```json
-    { "src": "/", "dest": "/index.html" }
-    ```
-    This rule ensures that when a user visits your main domain (`/`), they are served your login page, which is now correctly named `index.html`.
-
-3.  **Fallback Route:**
-    ```json
-    { "src": "/(.*)", "dest": "/index.html" }
-    
